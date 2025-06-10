@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FK 10 Anos - A Festa!</title>
+    <!-- Inclui o Tailwind CSS via CDN para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Define a fonte Inter para todo o documento -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Estilos adicionais para sobrepor ou complementar o Tailwind, se necessário */
+        .instagram-link {
+            display: inline-flex;
+            align-items: center;
+            background-color: #E1306C; /* Cor do Instagram */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* Pill shape */
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .instagram-link:hover {
+            background-color: #C13584;
+        }
+        /* Estilo para garantir que o Typebot tenha uma altura mínima para ser visível */
+        typebot-standard {
+            display: block; /* Garante que a tag se comporte como um bloco */
+            width: 100%;
+            height: 600px; /* Altura definida pelo snippet do Typebot */
+            background-color: #fff; /* Fundo branco para o Typebot */
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow: hidden; /* Garante que o conteúdo do iframe não vaze */
+        }
+    </style>
+    <!-- Seu arquivo de CSS personalizado (se necessário, além do Tailwind) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gradient-to-br from-purple-800 via-indigo-900 to-purple-800 flex flex-col items-center justify-center min-h-screen p-4">
+
+    <!-- Container Principal do Evento -->
+    <div class="bg-white rounded-lg shadow-2xl p-8 md:p-12 max-w-4xl w-full my-8 transform transition-transform duration-300 hover:scale-[1.01]">
+        <div class="flex flex-col items-center justify-center mb-8">
+            <img src="https://placehold.co/150x150/8a2be2/ffffff?text=LOGO+FK" alt="Logo FK" class="mb-4 rounded-full shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-center text-purple-900 leading-tight mb-4">
+                FK 10 ANOS! A FESTA!
+            </h1>
+            <p class="text-center text-gray-700 text-xl md:text-2xl font-semibold mb-6">
+                Uma noite inesquecível para celebrar uma década de conexões autênticas e liberdade.
+            </p>
+        </div>
+
+        <!-- Informações Chave do Evento -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center mb-12">
+            <div class="bg-purple-100 p-6 rounded-lg shadow-md border border-purple-200">
+                <svg class="w-10 h-10 mx-auto mb-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span class="font-bold text-lg text-gray-800">Data:</span>
+                <p class="text-gray-700 text-md">Sábado, 12 de Julho de 2025</p>
+            </div>
+            <div class="bg-purple-100 p-6 rounded-lg shadow-md border border-purple-200">
+                <svg class="w-10 h-10 mx-auto mb-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span class="font-bold text-lg text-gray-800">Horário:</span>
+                <p class="text-gray-700 text-md">23:00</p>
+            </div>
+            <div class="bg-purple-100 p-6 rounded-lg shadow-md border border-purple-200">
+                <svg class="w-10 h-10 mx-auto mb-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0L6.343 16.657m10.607-10.607L13.414 3.1a1.998 1.998 0 00-2.828 0L6.343 6.657m0 0l-1.673 1.673a2 2 0 00-.592 1.414V14a2 2 0 002 2h4.5l-4.5 4.5m1.5-1.5l1.673-1.673a2 2 0 00.592-1.414V10a2 2 0 00-2-2H9.5L14 3.5m1.5 1.5l1.673 1.673a2 2 0 00.592 1.414V14a2 2 0 00-2-2h-4.5l4.5-4.5"></path></svg>
+                <span class="font-bold text-lg text-gray-800">Local:</span>
+                <p class="text-gray-700 text-md">Antiqua Sapore, Centro/RJ</p>
+            </div>
+        </div>
+
+        <!-- Seção de Compra de Ingressos com Typebot (Visível por padrão) -->
+        <div id="checkout-section" class="bg-blue-50 p-6 rounded-md mb-8 border border-blue-200">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Comprar Ingressos</h2>
+            <p class="text-center text-gray-600 text-lg mb-6">
+                A Cris Virtual vai te conduzir até seu ingresso!
+            </p>
+            <!-- O Typebot será embedado diretamente aqui -->
+            <script type="module">
+                import Typebot from 'https://cdn.jsdelivr.net/npm/@typebot.io/js@0/dist/web.js';
+                // Inicializa o Typebot Standard, que procurará pela tag <typebot-standard>
+                Typebot.initStandard({ typebot: "customer-support-ndowjbl" });
+            </script>
+            <typebot-standard style="width: 100%; height: 600px; "></typebot-standard>
+        </div>
+
+        <!-- Seção "O que esperar" -->
+        <div class="bg-purple-50 p-6 rounded-lg mb-12 border border-purple-200">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">O que esperar?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- DJs Incríveis -->
+                <div class="bg-white p-5 rounded-lg shadow-md border border-purple-100 flex flex-col items-center text-center">
+                    <svg class="w-10 h-10 mb-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M3 19l6 3V6L3 3v13z"></path></svg>
+                    <h3 class="font-bold text-xl text-gray-800 mb-2">DJs Incríveis</h3>
+                    <p class="text-gray-700 mb-4">Seleção musical que vai te fazer dançar a noite toda.</p>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="https://www.instagram.com/elen.quinta/" target="_blank" class="instagram-link">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram Logo" class="h-4 w-4 mr-2">
+                                @elen.quinta
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/ale.hofty/" target="_blank" class="instagram-link">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram Logo" class="h-4 w-4 mr-2">
+                                @ale.hofty
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/julioabessa/" target="_blank" class="instagram-link">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram Logo" class="h-4 w-4 mr-2">
+                                @julioabessa
+                            </a>
+                        </li>
+                        <li class="text-gray-600 italic">E muito mais por vir!</li>
+                    </ul>
+                </div>
+                <!-- Lounge Exclusivo para Membros -->
+                <div class="bg-white p-5 rounded-lg shadow-md border border-purple-100 flex flex-col items-center text-center">
+                    <svg class="w-10 h-10 mb-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9m0 3.75V12m0 3.75V15m0-6.75h.008v.008H12V8.25zm0 3.75h.008v.008H12v-.008zm0 3.75h.008v.008H12v-.008z"></path></svg>
+                    <h3 class="font-bold text-xl text-gray-800 mb-2">Lounge Exclusivo para Membros</h3>
+                    <p class="text-gray-700">Espaço especial para quem acompanha a FK desde o início, com conforto e networking.</p>
+                </div>
+                <!-- Galeria de Fotos Inéditas -->
+                <div class="bg-white p-5 rounded-lg shadow-md border border-purple-100 flex flex-col items-center text-center">
+                    <svg class="w-10 h-10 mb-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <h3 class="font-bold text-xl text-gray-800 mb-2">Galeria de Fotos Inéditas</h3>
+                    <p class="text-gray-700">Uma viagem visual pelos 10 anos de história da FK.</p>
+                </div>
+                <!-- Performances Especiais -->
+                <div class="bg-white p-5 rounded-lg shadow-md border border-purple-100 flex flex-col items-center text-center">
+                    <svg class="w-10 h-10 mb-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    <h3 class="font-bold text-xl text-gray-800 mb-2">Performances Especiais</h3>
+                    <p class="text-gray-700">Apresentações exclusivas para celebrar esta data.</p>
+                </div>
+                 <!-- Surpresas e Brindes -->
+                 <div class="bg-white p-5 rounded-lg shadow-md border border-purple-100 flex flex-col items-center text-center">
+                    <svg class="w-10 h-10 mb-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <h3 class="font-bold text-xl text-gray-800 mb-2">Surpresas e Brindes</h3>
+                    <p class="text-gray-700">Lembranças especiais para os participantes.</p>
+                </div>
+                <!-- Muito afeto e beijos livres -->
+                <div class="bg-white p-5 rounded-lg shadow-md border border-purple-100 flex flex-col items-center text-center">
+                    <svg class="w-10 h-10 mb-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 22l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    <h3 class="font-bold text-xl text-gray-800 mb-2">Muito Afeto e Beijos Livres</h3>
+                    <p class="text-gray-700">A essência da FK em sua forma mais pura.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Seu arquivo JavaScript personalizado -->
+    <script src="script.js"></script>
+</body>
+</html>

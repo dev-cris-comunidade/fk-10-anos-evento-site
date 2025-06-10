@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Ingresso Público Geral FK</title>
+    <!-- Inclui o Tailwind CSS via CDN para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Define a fonte Inter para todo o documento -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-800 via-indigo-900 to-purple-800 flex flex-col items-center justify-center min-h-screen p-4">
+
+    <div class="bg-white rounded-lg shadow-2xl p-8 md:p-12 max-w-md w-full my-8 transform transition-transform duration-300 hover:scale-[1.01]">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-center text-purple-900 mb-6">
+            Seu Ingresso Público Geral FK
+        </h1>
+        <p class="text-center text-gray-700 text-lg mb-8">
+            Você está comprando o ingresso para Público Geral.
+        </p>
+
+        <div class="bg-purple-100 p-6 rounded-md mb-8 border border-purple-200">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Resumo do Pedido</h2>
+            <div class="flex items-center justify-between bg-white border border-purple-300 rounded-md p-4 mb-4 shadow-sm">
+                <span class="text-gray-700 font-semibold">Lote I - Ingresso Público Geral</span>
+                <span class="text-purple-700 font-bold">R$ 40,00</span>
+            </div>
+
+            <div class="mb-4">
+                <label for="quantidade_ingressos_publico" class="block text-gray-700 font-semibold mb-2">Quantidade:</label>
+                <input type="number" id="quantidade_ingressos_publico" name="quantidade_ingressos_publico" min="1" value="1" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+            </div>
+
+            <button type="button" id="btn-comprar-publico" class="w-full bg-purple-600 text-white font-bold py-3 px-6 rounded-md hover:bg-purple-700 transition-colors duration-200 shadow-lg transform hover:scale-105 active:scale-95">
+                Pagar Agora
+            </button>
+        </div>
+
+        <p class="text-center text-sm text-gray-500 mt-6">Você será redirecionado para o ambiente seguro da InfinitePay para finalizar o pagamento.</p>
+    </div>
+
+    <!-- Seu arquivo JavaScript para a lógica de checkout -->
+    <script src="script.js"></script>
+    <script>
+        // Quando o DOM estiver carregado, adiciona o listener para o botão de compra
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnComprarPublico = document.getElementById('btn-comprar-publico');
+            if (btnComprarPublico) {
+                btnComprarPublico.addEventListener('click', () => {
+                    const quantidadeInput = document.getElementById('quantidade_ingressos_publico');
+                    const quantidade = parseInt(quantidadeInput.value, 10);
+                    // Chama a função global de checkout definida em script.js
+                    // Passando os dados fixos para o ingresso público geral
+                    iniciarCheckoutInfinitePay('Lote I - Ingresso Público Geral', 4000, quantidade);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

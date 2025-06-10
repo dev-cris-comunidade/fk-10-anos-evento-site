@@ -1,0 +1,35 @@
+/* public/style.css */
+
+/* Este arquivo é para estilos muito específicos que você não queira gerenciar com Tailwind ou para overrides. */
+/* Para este exemplo, a maioria dos estilos já está inline no HTML com classes Tailwind. */
+
+/* Exemplo: Ajuste a aparência dos inputs de rádio se o Tailwind não for suficiente */
+input[type="radio"].form-radio {
+    /* Alguns navegadores podem precisar de estilos específicos para form-radio */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: inline-block;
+    vertical-align: middle;
+    background-origin: border-box;
+    user-select: none;
+    flex-shrink: 0;
+    border-radius: 100%;
+    border-width: 1px;
+    border-color: #D1D5DB; /* gray-300 */
+}
+input[type="radio"].form-radio:checked {
+    background-color: #3B82F6; /* blue-600 */
+    border-color: #3B82F6; /* blue-600 */
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Opcional: Adicione um efeito de foco um pouco mais pronunciado para acessibilidade */
+input:focus, button:focus, label:focus-within {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px #BFDBFE, 0 0 0 4px #3B82F6; /* blue-200 e blue-600 */
+}
