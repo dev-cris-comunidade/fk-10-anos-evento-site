@@ -74,20 +74,27 @@
         document.addEventListener('DOMContentLoaded', async () => {
             // Parâmetros que a InfinitePay envia de volta
             const transactionId = getUrlParameter('transaction_id');
-            const orderNsuReceived = getUrlParameter('order_nsu'); // Este virá da InfinitePay agora
+            const orderNsuReceived = getUrlParameter('order_nsu'); // Este é o NSU que a InfinitePay gerou para nós
             const slugReceived = getUrlParameter('slug'); // Identificador da cobrança
 
             let redirectParams = '';
 
-            // Se a InfinitePay retornar os parâmetros, tentamos verificar
-            if (transactionId) { // Basta verificar transactionId, pois order_nsu pode ser gerado pela IP
-                const verificationUrl = `https://api.infinitepay.io/invoices/public/checkout/payment_check/${INFINITEPAY_HANDLE}?transaction_nsu=${transactionId}&external_order_nsu=${orderNsuReceived || ''}&slug=${slugReceived || ''}`;
-                // external_order_nsu é opcional se o InfinitePay cria o order_nsu
+            // Se a InfinitePay retornar o transactionId, tentamos verificar
+            if (transactionId) { 
+                // Construímos a URL de verificação. Omitimos external_order_nsu, pois não enviamos um.
+                let verificationUrl = `https://api.infinitepay.io/invoices/public/checkout/payment_check/${INFINITEPAY_HANDLE}?transaction_nsu=${transactionId}`;
+                
+                // Adicionamos o slug se ele estiver disponível, é um identificador importante para a IP
+                if (slugReceived) {
+                    verificationUrl += `&slug=${slugReceived}`;
+                }
+                // Não adicionamos external_order_nsu pois não enviamos um NSU nosso para a InfinitePay,
+                // e eles geraram o order_nsu que recebemos.
 
                 try {
                     const response = await fetch(verificationUrl);
                     if (!response.ok) {
-                        // Trata erros HTTP como 404, 500
+                        // Trata erros HTTP como 404, 500, etc.
                         throw new Error(`Erro HTTP: ${response.status} - ${response.statusText}`);
                     }
                     const data = await response.json();
@@ -95,7 +102,7 @@
                     if (data.success && data.paid) {
                         redirectParams = `?payment_status=success&order_nsu=${orderNsuReceived || ''}&transaction_id=${transactionId}`;
                     } else {
-                        // Se success=false ou paid=false
+                        // Se success=false ou paid=false na resposta da verificação
                         redirectParams = `?payment_status=failed&reason=payment_not_confirmed&order_nsu=${orderNsuReceived || ''}&transaction_id=${transactionId}`;
                     }
                 } catch (error) {
@@ -104,13 +111,13 @@
                     redirectParams = `?payment_status=failed&reason=verification_error&error_details=${encodeURIComponent(error.message || 'unknown')}`;
                 }
             } else {
-                // Se nem mesmo o transactionId foi retornado pela InfinitePay
+                // Se nem mesmo o transactionId foi retornado pela InfinitePay (algo deu muito errado)
                 redirectParams = `?payment_status=failed&reason=missing_params`;
             }
 
             // Redireciona para a landing page com os parâmetros de status após um pequeno delay
             setTimeout(() => {
-                window.location.href = `${LANDING_PAGE_URL}${redirectParams}`;
+                window.location.href = `${LANDING_PAGE_URL}${redirectParams}`; 
             }, 2000); // 2 segundos de delay para processamento visual
         });
     </script>
