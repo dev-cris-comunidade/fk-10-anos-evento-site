@@ -3,45 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagamento Concluído - Seminário FK</title>
+    <title>Processando Pagamento...</title>
     <!-- Inclui o Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0; /* Fundo padrão */
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            background: linear-gradient(to bottom right, #4A00B0, #8E2DE2); /* Gradiente da FK */
+            color: white; /* Texto branco no fundo gradiente */
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.95); /* Fundo branco semi-transparente */
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            transform: translateY(0);
+            transition: transform 0.3s ease-out;
+            color: #333; /* Texto escuro dentro do container branco */
+        }
+        h1 {
+            color: #4A00B0; /* Uma cor roxa da FK para o título interno */
+            margin-bottom: 20px;
+            font-size: 2em;
+            font-weight: bold;
+        }
+        p {
+            margin-bottom: 25px;
+            line-height: 1.7;
+            font-size: 1.1em;
         }
     </style>
 </head>
-<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
+<body>
 
-    <div class="bg-white rounded-lg shadow-xl p-8 md:p-12 max-w-2xl w-full text-center my-8">
-        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-6">
-            Status do Pagamento
-        </h1>
-        <p id="status-mensagem" class="text-lg text-gray-700 mb-8">
-            Verificando seu pagamento... Por favor, aguarde.
-        </p>
-
-        <!-- Placeholder para o ícone de status (sucesso/falha) -->
-        <div id="status-icon" class="mb-8">
-            <!-- Ícone de carregamento inicial -->
+    <div class="container">
+        <h1>Processando seu Pagamento...</h1>
+        <p>Estamos verificando o status da sua transação. Você será redirecionado(a) em breve.</p>
+        <div class="mb-8">
             <svg class="animate-spin h-12 w-12 text-blue-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
         </div>
-
-        <a href="index.html" class="inline-block bg-blue-600 text-white font-bold py-3 px-6 rounded-md hover:bg-blue-700 transition-colors duration-200 shadow-lg transform hover:scale-105 active:scale-95">
-            Voltar para a Página do Evento
-        </a>
     </div>
 
-    <!-- Script para verificar o status do pagamento -->
+    <!-- Script para verificar e redirecionar -->
     <script>
-        // Seu handle da InfinitePay (o mesmo usado na página principal)
         const INFINITEPAY_HANDLE = 'almeidascris';
+        // URL da sua landing page (index.html) no subdomínio eventos.fk.redenaomono.org
+        const LANDING_PAGE_URL = 'https://eventos.fk.redenaomono.org/'; 
 
-        // Função para obter parâmetros da URL
         function getUrlParameter(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
             var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
@@ -49,54 +71,47 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const statusMensagem = document.getElementById('status-mensagem');
-            const statusIcon = document.getElementById('status-icon');
-
-            // Pega os parâmetros enviados pela InfinitePay na URL de retorno
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Parâmetros que a InfinitePay envia de volta
             const transactionId = getUrlParameter('transaction_id');
-            const orderNsuReceived = getUrlParameter('order_nsu');
-            const slugReceived = getUrlParameter('slug'); // Opcional, mas útil para verificação
+            const orderNsuReceived = getUrlParameter('order_nsu'); // Este virá da InfinitePay agora
+            const slugReceived = getUrlParameter('slug'); // Identificador da cobrança
 
-            // Idealmente, esta verificação de pagamento deve ser feita no seu BACKEND
-            // por questões de SEGURANÇA. Um script frontend puro como este é menos seguro
-            // pois os parâmetros da URL podem ser manipulados.
-            // Contudo, para um protótipo ou MVP, ele pode funcionar.
+            let redirectParams = '';
 
-            if (transactionId && orderNsuReceived) {
-                // Monta a URL da API de verificação da InfinitePay
-                const verificationUrl = `https://api.infinitepay.io/invoices/public/checkout/payment_check/${INFINITEPAY_HANDLE}?transaction_nsu=${transactionId}&external_order_nsu=${orderNsuReceived}&slug=${slugReceived}`;
+            // Se a InfinitePay retornar os parâmetros, tentamos verificar
+            if (transactionId) { // Basta verificar transactionId, pois order_nsu pode ser gerado pela IP
+                const verificationUrl = `https://api.infinitepay.io/invoices/public/checkout/payment_check/${INFINITEPAY_HANDLE}?transaction_nsu=${transactionId}&external_order_nsu=${orderNsuReceived || ''}&slug=${slugReceived || ''}`;
+                // external_order_nsu é opcional se o InfinitePay cria o order_nsu
 
-                fetch(verificationUrl)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`Erro HTTP: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.success && data.paid) {
-                            statusMensagem.innerText = 'Pagamento confirmado! Sua inscrição foi realizada com sucesso.';
-                            statusIcon.innerHTML = `<svg class="h-12 w-12 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
-                            // Aqui você pode adicionar lógica adicional, como:
-                            // - Redirecionar para uma área de membros
-                            // - Exibir detalhes do ingresso/comprovante (se a InfinitePay retornar um receipt_url)
-                            // - Marcar o pedido como pago no seu sistema de gestão (se houver um backend)
-                        } else {
-                            statusMensagem.innerText = 'Não foi possível confirmar o pagamento. Por favor, verifique seu status ou entre em contato.';
-                            statusIcon.innerHTML = `<svg class="h-12 w-12 text-red-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
-                            console.error('Erro na verificação do pagamento:', data);
-                        }
-                    })
-                    .catch(error => {
-                        statusMensagem.innerText = 'Ocorreu um erro ao verificar o pagamento. Por favor, entre em contato com o suporte.';
-                        statusIcon.innerHTML = `<svg class="h-12 w-12 text-red-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
-                        console.error('Erro de rede ou API:', error);
-                    });
+                try {
+                    const response = await fetch(verificationUrl);
+                    if (!response.ok) {
+                        // Trata erros HTTP como 404, 500
+                        throw new Error(`Erro HTTP: ${response.status} - ${response.statusText}`);
+                    }
+                    const data = await response.json();
+
+                    if (data.success && data.paid) {
+                        redirectParams = `?payment_status=success&order_nsu=${orderNsuReceived || ''}&transaction_id=${transactionId}`;
+                    } else {
+                        // Se success=false ou paid=false
+                        redirectParams = `?payment_status=failed&reason=payment_not_confirmed&order_nsu=${orderNsuReceived || ''}&transaction_id=${transactionId}`;
+                    }
+                } catch (error) {
+                    // Erros de rede ou na própria chamada fetch/API
+                    console.error('Erro ao verificar pagamento:', error);
+                    redirectParams = `?payment_status=failed&reason=verification_error&error_details=${encodeURIComponent(error.message || 'unknown')}`;
+                }
             } else {
-                statusMensagem.innerText = 'Não foi possível encontrar os detalhes do pagamento na URL. Por favor, tente novamente ou entre em contato.';
-                statusIcon.innerHTML = `<svg class="h-12 w-12 text-red-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+                // Se nem mesmo o transactionId foi retornado pela InfinitePay
+                redirectParams = `?payment_status=failed&reason=missing_params`;
             }
+
+            // Redireciona para a landing page com os parâmetros de status após um pequeno delay
+            setTimeout(() => {
+                window.location.href = `${LANDING_PAGE_URL}${redirectParams}`;
+            }, 2000); // 2 segundos de delay para processamento visual
         });
     </script>
 </body>

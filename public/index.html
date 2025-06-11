@@ -41,10 +41,23 @@
 </head>
 <body class="bg-gradient-to-br from-purple-800 via-indigo-900 to-purple-800 flex flex-col items-center justify-center min-h-screen p-4">
 
+    <!-- Modal de Status de Pagamento -->
+    <div id="payment-status-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div id="modal-icon" class="text-6xl mb-4"></div>
+            <h2 id="modal-title" class="text-3xl font-bold text-gray-800 mb-4"></h2>
+            <p id="modal-message" class="text-gray-700 text-lg mb-6"></p>
+            <button id="modal-close-button" class="bg-purple-600 text-white font-bold py-2 px-6 rounded-md hover:bg-purple-700 transition-colors duration-200 shadow-md">
+                Fechar
+            </button>
+        </div>
+    </div>
+
     <!-- Container Principal do Evento -->
     <div class="bg-white rounded-lg shadow-2xl p-8 md:p-12 max-w-4xl w-full my-8 transform transition-transform duration-300 hover:scale-[1.01]">
         <div class="flex flex-col items-center justify-center mb-8">
-            <img src="https://placehold.co/150x150/8a2be2/ffffff?text=LOGO+FK" alt="Logo FK" class="mb-4 rounded-full shadow-lg">
+            <!-- CAMINHO DA LOGO ATUALIZADO AQUI -->
+            <img src="images/logo-fk.png" alt="Logo FK" class="mb-4 rounded-full shadow-lg w-36 h-36 object-cover">
             <h1 class="text-4xl md:text-6xl font-extrabold text-center text-purple-900 leading-tight mb-4">
                 FK 10 ANOS! A FESTA!
             </h1>
