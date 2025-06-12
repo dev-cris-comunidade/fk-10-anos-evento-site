@@ -1,125 +1,126 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Processando Pagamento...</title>
-    <!-- Inclui o Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f0f0f0; /* Fundo padrão */
-            text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
-            background: linear-gradient(to bottom right, #4A00B0, #8E2DE2); /* Gradiente da FK */
-            color: white; /* Texto branco no fundo gradiente */
-        }
-        .container {
-            background-color: rgba(255, 255, 255, 0.95); /* Fundo branco semi-transparente */
-            padding: 30px 40px;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
-            width: 100%;
-            transform: translateY(0);
-            transition: transform 0.3s ease-out;
-            color: #333; /* Texto escuro dentro do container branco */
-        }
-        h1 {
-            color: #4A00B0; /* Uma cor roxa da FK para o título interno */
-            margin-bottom: 20px;
-            font-size: 2em;
-            font-weight: bold;
-        }
-        p {
-            margin-bottom: 25px;
-            line-height: 1.7;
-            font-size: 1.1em;
-        }
-    </style>
-</head>
-<body>
+        <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Processando Pagamento...</title>
+        <!-- Inclui o Tailwind CSS via CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            body {
+                font-family: 'Inter', sans-serif;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                background-color: #f0f0f0; /* Fundo padrão */
+                text-align: center;
+                padding: 20px;
+                box-sizing: border-box;
+                background: linear-gradient(to bottom right, #4A00B0, #8E2DE2); /* Gradiente da FK */
+                color: white; 
+            }
+            .container {
+                background-color: rgba(255, 255, 255, 0.95); /* Fundo branco semi-transparente */
+                padding: 30px 40px;
+                border-radius: 12px;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+                max-width: 500px;
+                width: 100%;
+                transform: translateY(0);
+                transition: transform 0.3s ease-out;
+                color: #333; /* Texto escuro dentro do container branco */
+            }
+            h1 {
+                color: #4A00B0; /* Uma cor roxa da FK para o título interno */
+                margin-bottom: 20px;
+                font-size: 2em;
+                font-weight: bold;
+            }
+            p {
+                margin-bottom: 25px;
+                line-height: 1.7;
+                font-size: 1.1em;
+            }
+        </style>
+    </head>
+    <body>
 
-    <div class="container">
-        <h1>Processando seu Pagamento...</h1>
-        <p>Estamos verificando o status da sua transação. Você será redirecionado(a) em breve.</p>
-        <div class="mb-8">
-            <svg class="animate-spin h-12 w-12 text-blue-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
+        <div class="container">
+            <h1>Processando seu Pagamento...</h1>
+            <p>Estamos verificando o status da sua transação. Você será redirecionado(a) em breve.</p>
+            <div class="mb-8">
+                <svg class="animate-spin h-12 w-12 text-blue-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+            </div>
         </div>
-    </div>
 
-    <!-- Script para verificar e redirecionar -->
-    <script>
-        const INFINITEPAY_HANDLE = 'almeidascris';
-        // URL da sua landing page (index.html) no subdomínio eventos.fk.redenaomono.org
-        const LANDING_PAGE_URL = 'https://eventos.fk.redenaomono.org/'; 
+        <!-- Script para verificar e redirecionar -->
+        <script>
+            const INFINITEPAY_HANDLE = 'almeidascris';
+            const LANDING_PAGE_URL = 'https://eventos.fk.redenaomono.org/'; 
 
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            var results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-        }
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Parâmetros que a InfinitePay envia de volta
-            const transactionId = getUrlParameter('transaction_id');
-            const orderNsuReceived = getUrlParameter('order_nsu'); // Este é o NSU que a InfinitePay gerou para nós
-            const slugReceived = getUrlParameter('slug'); // Identificador da cobrança
-
-            let redirectParams = '';
-
-            // Se a InfinitePay retornar o transactionId, tentamos verificar
-            if (transactionId) { 
-                // Construímos a URL de verificação. Omitimos external_order_nsu, pois não enviamos um.
-                let verificationUrl = `https://api.infinitepay.io/invoices/public/checkout/payment_check/${INFINITEPAY_HANDLE}?transaction_nsu=${transactionId}`;
-                
-                // Adicionamos o slug se ele estiver disponível, é um identificador importante para a IP
-                if (slugReceived) {
-                    verificationUrl += `&slug=${slugReceived}`;
-                }
-                // Não adicionamos external_order_nsu pois não enviamos um NSU nosso para a InfinitePay,
-                // e eles geraram o order_nsu que recebemos.
-
-                try {
-                    const response = await fetch(verificationUrl);
-                    if (!response.ok) {
-                        // Trata erros HTTP como 404, 500, etc.
-                        throw new Error(`Erro HTTP: ${response.status} - ${response.statusText}`);
-                    }
-                    const data = await response.json();
-
-                    if (data.success && data.paid) {
-                        redirectParams = `?payment_status=success&order_nsu=${orderNsuReceived || ''}&transaction_id=${transactionId}`;
-                    } else {
-                        // Se success=false ou paid=false na resposta da verificação
-                        redirectParams = `?payment_status=failed&reason=payment_not_confirmed&order_nsu=${orderNsuReceived || ''}&transaction_id=${transactionId}`;
-                    }
-                } catch (error) {
-                    // Erros de rede ou na própria chamada fetch/API
-                    console.error('Erro ao verificar pagamento:', error);
-                    redirectParams = `?payment_status=failed&reason=verification_error&error_details=${encodeURIComponent(error.message || 'unknown')}`;
-                }
-            } else {
-                // Se nem mesmo o transactionId foi retornado pela InfinitePay (algo deu muito errado)
-                redirectParams = `?payment_status=failed&reason=missing_params`;
+            function getUrlParameter(name) {
+                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                var results = regex.exec(location.search);
+                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
             }
 
-            // Redireciona para a landing page com os parâmetros de status após um pequeno delay
-            setTimeout(() => {
-                window.location.href = `${LANDING_PAGE_URL}${redirectParams}`; 
-            }, 2000); // 2 segundos de delay para processamento visual
-        });
-    </script>
-</body>
-</html>
+            document.addEventListener('DOMContentLoaded', async () => {
+                // Parâmetros que a InfinitePay envia de volta na redirect_url (Passo 3)
+                const transactionId = getUrlParameter('transaction_id'); 
+                const orderNsuReceived = getUrlParameter('order_nsu'); 
+                const slugReceived = getUrlParameter('slug'); 
+                const captureMethod = getUrlParameter('capture_method'); 
+
+                let redirectParams = '';
+
+                // Se transaction_id estiver presente, tentamos verificar o pagamento
+                if (transactionId) { 
+                    // CHAMA SEU PRÓPRIO PROXY DE BACKEND AQUI
+                    const proxyUrl = `/api/verify-payment?handle=${INFINITEPAY_HANDLE}&transaction_nsu=${transactionId}`;
+                    
+                    if (orderNsuReceived) { // Incluí o orderNsuReceived para o proxy, caso seja útil
+                        proxyUrl += `&order_nsu_external=${orderNsuReceived}`; // Renomeado para evitar confusão com external_order_nsu
+                    }
+                    if (slugReceived) {
+                        proxyUrl += `&slug=${slugReceived}`;
+                    }
+
+                    try {
+                        const response = await fetch(proxyUrl); // Faz a requisição para o seu proxy
+
+                        if (!response.ok) {
+                            // Erro no proxy (ex: 400, 500)
+                            const errorData = await response.json();
+                            throw new Error(`Erro do Proxy: ${response.status} - ${errorData.error || response.statusText}`);
+                        }
+                        const data = await response.json(); // Resposta da API da InfinitePay via proxy
+
+                        // Verifica o conteúdo da resposta (Passo 4 da documentação da InfinitePay)
+                        if (data.success === true && data.paid === true) {
+                            redirectParams = `?payment_status=success&transaction_id=${transactionId}&order_nsu=${orderNsuReceived || ''}&capture_method=${captureMethod || ''}`;
+                        } else {
+                            redirectParams = `?payment_status=failed&reason=payment_not_confirmed_api&transaction_id=${transactionId}&order_nsu=${orderNsuReceived || ''}&capture_method=${captureMethod || ''}`;
+                        }
+                    } catch (error) {
+                        console.error('Erro na requisição para o Proxy:', error);
+                        redirectParams = `?payment_status=failed&reason=proxy_api_error&error_details=${encodeURIComponent(error.message || 'unknown_proxy_error')}&transaction_id=${transactionId || ''}`;
+                    }
+                } else {
+                    redirectParams = `?payment_status=failed&reason=missing_infinitepay_params`;
+                }
+
+                // Redireciona para a landing page com os parâmetros de status
+                setTimeout(() => {
+                    window.location.href = `${LANDING_PAGE_URL}${redirectParams}`;
+                }, 2000); 
+            });
+        </script>
+    </body>
+    </html>
+    

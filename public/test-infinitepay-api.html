@@ -1,172 +1,169 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testar API InfinitePay</title>
-    <!-- Inclui o Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f3f4f6; /* Gray-100 */
-        }
-        .container {
-            background-color: white;
-            padding: 2.5rem; /* p-10 */
-            border-radius: 0.75rem; /* rounded-lg */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-        }
-        input, button {
-            border-radius: 0.375rem; /* rounded-md */
-            padding: 0.75rem 1rem; /* py-2 px-4 */
-            border: 1px solid #d1d5db; /* border-gray-300 */
-            width: 100%;
-            font-size: 1rem; /* text-base */
-            margin-bottom: 1rem; /* mb-4 */
-        }
-        button {
-            background-color: #4f46e5; /* indigo-600 */
-            color: white;
-            font-weight: 600; /* font-semibold */
-            cursor: pointer;
-            transition: background-color 0.2s ease-in-out;
-        }
-        button:hover {
-            background-color: #4338ca; /* indigo-700 */
-        }
-        .result-box {
-            background-color: #f9fafb; /* gray-50 */
-            border: 1px solid #e5e7eb; /* border-gray-200 */
-            border-radius: 0.375rem;
-            padding: 1rem;
-            margin-top: 1rem;
-            text-align: left;
-            font-family: monospace;
-            white-space: pre-wrap; /* Quebra linha para texto longo */
-            word-wrap: break-word; /* Quebra palavra para URLs */
-            min-height: 100px;
-        }
-        .error-text {
-            color: #ef4444; /* red-500 */
-            font-weight: bold;
-        }
-        .success-text {
-            color: #22c55e; /* green-500 */
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Testar API InfinitePay</title>
+        <!-- Inclui o Tailwind CSS via CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            body {
+                font-family: 'Inter', sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                background-color: #f3f4f6; /* Gray-100 */
+            }
+            .container {
+                background-color: white;
+                padding: 2.5rem; /* p-10 */
+                border-radius: 0.75rem; /* rounded-lg */
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+                max-width: 600px;
+                width: 100%;
+                text-align: center;
+            }
+            input, button {
+                border-radius: 0.375rem; /* rounded-md */
+                padding: 0.75rem 1rem; /* py-2 px-4 */
+                border: 1px solid #d1d5db; /* border-gray-300 */
+                width: 100%;
+                font-size: 1rem; /* text-base */
+                margin-bottom: 1rem; /* mb-4 */
+            }
+            button {
+                background-color: #4f46e5; /* indigo-600 */
+                color: white;
+                font-weight: 600; /* font-semibold */
+                cursor: pointer;
+                transition: background-color 0.2s ease-in-out;
+            }
+            button:hover {
+                background-color: #4338ca; /* indigo-700 */
+            }
+            .result-box {
+                background-color: #f9fafb; /* gray-50 */
+                border: 1px solid #e5e7eb; /* border-gray-200 */
+                border-radius: 0.375rem;
+                padding: 1rem;
+                margin-top: 1rem;
+                text-align: left;
+                font-family: monospace;
+                white-space: pre-wrap; /* Quebra linha para texto longo */
+                word-wrap: break-word; /* Quebra palavra para URLs */
+                min-height: 100px;
+            }
+            .error-text {
+                color: #ef4444; /* red-500 */
+                font-weight: bold;
+            }
+            .success-text {
+                color: #22c55e; /* green-500 */
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
 
-    <div class="container">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6">Testar API de Verificação InfinitePay</h1>
-        <p class="text-gray-600 mb-6">Insira os dados de uma transação que você já tem para testar a API de verificação.</p>
+        <div class="container">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6">Testar API de Verificação InfinitePay (via Proxy)</h1>
+            <p class="text-gray-600 mb-6">Insira os dados de uma transação que você já tem para testar a API de verificação através do seu proxy.</p>
 
-        <div class="space-y-4">
-            <div>
-                <label for="handle" class="block text-gray-700 text-sm font-bold mb-2 text-left">Seu Handle InfinitePay (obrigatório):</label>
-                <input type="text" id="handle" value="almeidascris" placeholder="Seu handle (ex: almeidascris)" class="focus:ring-indigo-500 focus:border-indigo-500">
-            </div>
-            <div>
-                <label for="transaction_nsu" class="block text-gray-700 text-sm font-bold mb-2 text-left">transaction_nsu (ID da Transação da InfinitePay - obrigatório):</label>
-                <input type="text" id="transaction_nsu" placeholder="Ex: 5022068936780790" class="focus:ring-indigo-500 focus:border-indigo-500">
-                <p class="text-gray-500 text-xs text-left mt-1">Este é o 'transaction_id' que a InfinitePay retorna para sua redirect_url.</p>
-            </div>
-            <div>
-                <label for="order_nsu_external" class="block text-gray-700 text-sm font-bold mb-2 text-left">external_order_nsu (Se você enviou um ID próprio - opcional):</label>
-                <input type="text" id="order_nsu_external" placeholder="Ex: b69b772f-9c97-..." class="focus:ring-indigo-500 focus:border-indigo-500">
-                <p class="text-gray-500 text-xs text-left mt-1">Deixe vazio se a InfinitePay gera o order_nsu.</p>
-            </div>
-            <div>
-                <label for="slug" class="block text-gray-700 text-sm font-bold mb-2 text-left">slug (Identificador da Cobrança - opcional):</label>
-                <input type="text" id="slug" placeholder="Ex: mzkxMzY3LTExOTU2NzYw" class="focus:ring-indigo-500 focus:border-indigo-500">
-                <p class="text-gray-500 text-xs text-left mt-1">Também é retornado pela InfinitePay para sua redirect_url.</p>
+            <div class="space-y-4">
+                <div>
+                    <label for="handle" class="block text-gray-700 text-sm font-bold mb-2 text-left">Seu Handle InfinitePay (obrigatório):</label>
+                    <input type="text" id="handle" value="almeidascris" placeholder="Seu handle (ex: almeidascris)" class="focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="transaction_nsu" class="block text-gray-700 text-sm font-bold mb-2 text-left">transaction_nsu (ID da Transação da InfinitePay - obrigatório):</label>
+                    <input type="text" id="transaction_nsu" placeholder="Ex: 5022068936780790" class="focus:ring-indigo-500 focus:border-indigo-500">
+                    <p class="text-gray-500 text-xs text-left mt-1">Este é o 'transaction_id' que a InfinitePay retorna para sua redirect_url.</p>
+                </div>
+                <div>
+                    <label for="order_nsu_external" class="block text-gray-700 text-sm font-bold mb-2 text-left">order_nsu_external (Se você enviou um ID próprio - opcional):</label>
+                    <input type="text" id="order_nsu_external" placeholder="Ex: b69b772f-9c97-..." class="focus:ring-indigo-500 focus:border-indigo-500">
+                    <p class="text-gray-500 text-xs text-left mt-1">Deixe vazio se a InfinitePay gera o order_nsu.</p>
+                </div>
+                <div>
+                    <label for="slug" class="block text-gray-700 text-sm font-bold mb-2 text-left">slug (Identificador da Cobrança - opcional):</label>
+                    <input type="text" id="slug" placeholder="Ex: mzkxMzY3LTExOTU2NzYw" class="focus:ring-indigo-500 focus:border-indigo-500">
+                    <p class="text-gray-500 text-xs text-left mt-1">Também é retornado pela InfinitePay para sua redirect_url.</p>
+                </div>
+
+                <button id="test-button">Testar Verificação API (via Proxy)</button>
             </div>
 
-            <button id="test-button">Testar Verificação API</button>
+            <div class="result-box mt-8">
+                <h2 class="text-xl font-semibold text-gray-700 mb-2">Resultado da API:</h2>
+                <pre id="api-response" class="text-gray-800 text-sm"></pre>
+            </div>
         </div>
 
-        <div class="result-box mt-8">
-            <h2 class="text-xl font-semibold text-gray-700 mb-2">Resultado da API:</h2>
-            <pre id="api-response" class="text-gray-800 text-sm"></pre>
-        </div>
-    </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const handleInput = document.getElementById('handle');
+                const transactionNsuInput = document.getElementById('transaction_nsu');
+                const orderNsuExternalInput = document.getElementById('order_nsu_external');
+                const slugInput = document.getElementById('slug');
+                const testButton = document.getElementById('test-button');
+                const apiResponseDiv = document.getElementById('api-response');
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const handleInput = document.getElementById('handle');
-            const transactionNsuInput = document.getElementById('transaction_nsu');
-            const orderNsuExternalInput = document.getElementById('order_nsu_external');
-            const slugInput = document.getElementById('slug');
-            const testButton = document.getElementById('test-button');
-            const apiResponseDiv = document.getElementById('api-response');
+                // Pré-preenche o handle
+                handleInput.value = 'almeidascris'; 
 
-            // Pré-preenche o handle
-            handleInput.value = 'almeidascris'; 
+                testButton.addEventListener('click', async () => {
+                    const handle = handleInput.value.trim();
+                    const transactionNsu = transactionNsuInput.value.trim();
+                    const orderNsuExternal = orderNsuExternalInput.value.trim();
+                    const slug = slugInput.value.trim();
 
-            testButton.addEventListener('click', async () => {
-                const handle = handleInput.value.trim();
-                const transactionNsu = transactionNsuInput.value.trim();
-                const orderNsuExternal = orderNsuExternalInput.value.trim();
-                const slug = slugInput.value.trim();
-
-                if (!handle || !transactionNsu) {
-                    apiResponseDiv.innerHTML = '<span class="error-text">Handle e transaction_nsu são obrigatórios.</span>';
-                    return;
-                }
-
-                apiResponseDiv.innerHTML = 'Carregando...';
-                apiResponseDiv.classList.remove('error-text', 'success-text');
-
-                // Construindo a URL da API de verificação
-                let verificationUrl = `https://api.infinitepay.io/invoices/public/checkout/payment_check/${handle}?transaction_nsu=${transactionNsu}`;
-                
-                if (orderNsuExternal) {
-                    verificationUrl += `&external_order_nsu=${orderNsuExternal}`;
-                }
-                if (slug) {
-                    verificationUrl += `&slug=${slug}`;
-                }
-
-                try {
-                    const response = await fetch(verificationUrl);
-                    const responseText = await response.text(); // Pega como texto primeiro para depuração
-                    
-                    if (!response.ok) {
-                        // Se a resposta HTTP não for OK (ex: 400, 404, 500)
-                        apiResponseDiv.innerHTML = `<span class="error-text">Erro HTTP: ${response.status} - ${response.statusText}</span><br><pre>${responseText}</pre>`;
-                        console.error('Erro HTTP ao verificar pagamento:', response.status, responseText);
+                    if (!handle || !transactionNsu) {
+                        apiResponseDiv.innerHTML = '<span class="error-text">Handle e transaction_nsu são obrigatórios.</span>';
                         return;
                     }
 
-                    const data = JSON.parse(responseText); // Tenta parsear para JSON
+                    apiResponseDiv.innerHTML = 'Carregando...';
+                    apiResponseDiv.classList.remove('error-text', 'success-text');
 
-                    if (data.success === true && data.paid === true) {
-                        apiResponseDiv.innerHTML = `<span class="success-text">Pagamento CONFIRMADO!</span><br><pre>${JSON.stringify(data, null, 2)}</pre>`;
-                    } else if (data.success === true && data.paid === false) {
-                        apiResponseDiv.innerHTML = `<span class="error-text">Pagamento NÃO PAGO/PENDENTE.</span><br><pre>${JSON.stringify(data, null, 2)}</pre>`;
-                    } else {
-                        apiResponseDiv.innerHTML = `<span class="error-text">Erro na resposta da API (success: false).</span><br><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                    // CHAMA SEU PRÓPRIO PROXY DE BACKEND AQUI
+                    let proxyUrl = `/api/verify-payment?handle=${handle}&transaction_nsu=${transactionNsu}`;
+                    
+                    if (orderNsuExternal) {
+                        proxyUrl += `&external_order_nsu=${orderNsuExternal}`; 
                     }
-                    console.log('Resposta completa da API:', data);
+                    if (slug) {
+                        proxyUrl += `&slug=${slug}`;
+                    }
 
-                } catch (error) {
-                    // Erros de rede (CORS, sem internet) ou erro ao parsear JSON
-                    apiResponseDiv.innerHTML = `<span class="error-text">Erro ao conectar ou processar resposta da API. Verifique o console.</span><br><pre>${error.message}</pre>`;
-                    console.error('Erro na requisição ou parsing da API:', error);
-                    // Um erro de CORS aparecerá aqui no console do navegador (normalmente "TypeError: Failed to fetch")
-                    // Ou "SyntaxError: Unexpected token < in JSON at position 0" se a resposta não for JSON
-                }
+                    try {
+                        const response = await fetch(proxyUrl); // Faz a requisição para o seu proxy
+                        const responseText = await response.text(); 
+                        
+                        if (!response.ok) {
+                            apiResponseDiv.innerHTML = `<span class="error-text">Erro do Proxy: ${response.status} - ${response.statusText}</span><br><pre>${responseText}</pre>`;
+                            console.error('Erro do Proxy:', response.status, responseText);
+                            return;
+                        }
+
+                        const data = JSON.parse(responseText); // Tenta parsear para JSON
+
+                        if (data.success === true && data.paid === true) {
+                            apiResponseDiv.innerHTML = `<span class="success-text">Pagamento CONFIRMADO!</span><br><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                        } else if (data.success === true && data.paid === false) {
+                            apiResponseDiv.innerHTML = `<span class="error-text">Pagamento NÃO PAGO/PENDENTE.</span><br><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                        } else {
+                            apiResponseDiv.innerHTML = `<span class="error-text">Erro na resposta da API (success: false).</span><br><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                        }
+                        console.log('Resposta completa da API (via Proxy):', data);
+
+                    } catch (error) {
+                        apiResponseDiv.innerHTML = `<span class="error-text">Erro ao conectar ou processar resposta do Proxy. Verifique o console.</span><br><pre>${error.message}</pre>`;
+                        console.error('Erro na requisição ou parsing do Proxy:', error);
+                    }
+                });
             });
-        });
-    </script>
-</body>
-</html>
+        </script>
+    </body>
+    </html>
+    
